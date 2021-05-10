@@ -785,6 +785,28 @@ def ensure_deletable
 end
 ----
 
+=== `delete_by` and `destroy_by` [[delete_by-and-destroy_by]]
+
+Rails 6.0 has added `delete_by` and `destroy_by` as relation methods. Prefer the use of `delete_by` over `find_by(...)&.delete` and `where(...).delete_all`,
+and `destroy_by` over `find_by(...)&.destroy` and `where(...).destroy_all`.
+
+[source,ruby]
+----
+# bad
+unreads.find_by(readable: readable)&.delete
+unreads.where(readable: readable).delete_all
+
+# good
+unreads.delete_by(readable: readable)
+
+# bad
+unreads.find_by(readable: readable)&.destroy
+unreads.where(readable: readable).destroy_all
+
+# good
+unreads.destroy_by(readable: readable)
+----
+
 === `has_many`/`has_one` Dependent Option [[has_many-has_one-dependent-option]]
 
 Define the `dependent` option to the `has_many` and `has_one` associations.
